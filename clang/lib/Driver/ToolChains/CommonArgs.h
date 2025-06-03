@@ -270,6 +270,9 @@ void handleVectorizeLoopsArgs(const llvm::opt::ArgList &Args,
 /// Enable -fslp-vectorize based on the optimization level selected.
 void handleVectorizeSLPArgs(const llvm::opt::ArgList &Args,
                             llvm::opt::ArgStringList &CmdArgs);
+
+void ParseMPreferVectorWidth(const Driver &D, const llvm::opt::ArgList &Args,
+                             llvm::opt::ArgStringList &CmdArgs);
 } // end namespace tools
 } // end namespace driver
 } // end namespace clang

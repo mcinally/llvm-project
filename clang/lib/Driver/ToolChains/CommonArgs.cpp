@@ -3167,3 +3167,24 @@ void tools::handleInterchangeLoopsArgs(const ArgList &Args,
                    options::OPT_fno_loop_interchange, EnableInterchange))
     CmdArgs.push_back("-floop-interchange");
 }
+
+/// The -mprefer-vector-width option accepts either a positive integer
+/// or the string "none".
+void ParseMPreferVectorWidth(const Driver &D, const ArgList &Args,
+                             ArgStringList &CmdArgs) {
+  Arg *A = Args.getLastArg(options::OPT_mprefer_vector_width_EQ);
+  if (!A)
+    return;
+
+  StringRef Value = A->getValue();
+  if (Value == "none") {
+    CmdArgs.push_back("-mprefer-vector-width=none");
+  } else {
+    unsigned Width;
+    if (Value.getAsInteger(10, Width)) {
+      D.Diag(diag::err_drv_invalid_value) << A->getOption().getName() << Value;
+      return;
+    }
+    CmdArgs.push_back(Args.MakeArgString("-mprefer-vector-width=" + Value));
+  }
+}

@@ -154,6 +154,8 @@ void Flang::addCodegenOptions(const ArgList &Args,
   handleInterchangeLoopsArgs(Args, CmdArgs);
   handleVectorizeLoopsArgs(Args, CmdArgs);
   handleVectorizeSLPArgs(Args, CmdArgs);
+  const ToolChain &TC = getToolChain();
+  ParseMPreferVectorWidth(TC.getDriver(), Args, CmdArgs);
 
   if (shouldLoopVersion(Args))
     CmdArgs.push_back("-fversion-loops-for-stride");

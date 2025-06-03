@@ -308,7 +308,7 @@ static void parseCodeGenArgs(Fortran::frontend::CodeGenOptions &opts,
 
   for (auto *a : args.filtered(clang::driver::options::OPT_fpass_plugin_EQ))
     opts.LLVMPassPlugins.push_back(a->getValue());
-
+#if 0
   // -mprefer_vector_width option
   if (const llvm::opt::Arg *a = args.getLastArg(
           clang::driver::options::OPT_mprefer_vector_width_EQ)) {
@@ -322,6 +322,8 @@ static void parseCodeGenArgs(Fortran::frontend::CodeGenOptions &opts,
     else
       opts.PreferVectorWidth = s.str();
   }
+#endif
+  opts.PreferVectorWidth = invoc.getCodeGenOpts().PreferVectorWidth;
 
   // -fembed-offload-object option
   for (auto *a :
